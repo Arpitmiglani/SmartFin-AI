@@ -7,6 +7,7 @@ from agents.decision_agent import DecisionAgent
 from agents.prediction_agent import PredictionAgent
 from agents.alert_agent import AlertAgent
 from agents.memory_agent import MemoryAgent
+from agents.insight_agent import InsightAgent
 
 
 st.set_page_config(page_title="Agentic AI Finance Manager", layout="wide")
@@ -37,7 +38,6 @@ with st.sidebar.form("expense_form"):
     submit = st.form_submit_button("Add Expense")
 
 # -------- RESET BUTTON (RUNS FIRST) --------
-st.sidebar.markdown("---")
 if st.sidebar.button("🔄 Reset All Data"):
     pd.DataFrame(columns=["date", "category", "amount"]).to_csv(
         DATA_PATH, index=False
@@ -61,6 +61,7 @@ decision_agent = DecisionAgent()
 prediction_agent = PredictionAgent(DATA_PATH)
 alert_agent = AlertAgent()
 memory_agent = MemoryAgent(DATA_PATH)
+insight_agent = InsightAgent(DATA_PATH)
 
 # -------- ADD EXPENSE LOGIC --------
 if submit:
@@ -76,6 +77,7 @@ trained = prediction_agent.train()
 predicted = prediction_agent.predict(30) if trained else total_spent
 
 alert = alert_agent.generate_alert(predicted, budget)
+insights = insight_agent.generate_insights()
 
 # ---------------- DISPLAY ----------------
 col1, col2, col3 = st.columns(3)
@@ -88,5 +90,13 @@ if "⚠️" in alert:
     st.error(alert)
 else:
     st.success(alert)
+    st.markdown("---")
+st.subheader("Smart Insights")
+
+if insights:
+    for insight in insights:
+        st.write("•", insight)
+else:
+    st.info("No insights available yet.")
 
 
