@@ -24,9 +24,6 @@ budget = st.sidebar.number_input(
     step=500
 )
 
-if budget > 13000:
-    st.sidebar.error("❌ Budget cannot exceed 13000")
-    st.stop()
 
 st.sidebar.markdown("### ➕ Add Daily Expense")
 
@@ -92,14 +89,4 @@ if "⚠️" in alert:
 else:
     st.success(alert)
 
-st.subheader("📊 Category-wise Spending")
 
-if isinstance(category_spend, pd.Series) and not category_spend.empty:
-    st.bar_chart(category_spend)
-else:
-    st.info("No expenses added yet")
-
-
-st.subheader("📄 Expense History")
-df = pd.read_csv(DATA_PATH)
-st.dataframe(df, use_container_width=True)

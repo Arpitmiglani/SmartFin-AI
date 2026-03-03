@@ -1,6 +1,6 @@
 class DecisionAgent:
     def decide(self, total_spent, budget):
         if total_spent > budget:
-            return "⚠️ Warning: You are over budget! Reduce spending."
+            return "❌ You have exceeded your budget"
         else:
-            return "✅ You are within the budget. Good job!"
+            return "✅ You are within your budget"
