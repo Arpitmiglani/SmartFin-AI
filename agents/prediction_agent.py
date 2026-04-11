@@ -18,6 +18,11 @@ class PredictionAgent:
 
         X = df[["day"]]
         y = df["amount"]
+        # Remove NaN rows
+        data = pd.concat([X, y], axis=1).dropna()
+
+        X = data.iloc[:, :-1]
+        y = data.iloc[:, -1]
 
         self.model.fit(X, y)
         return True

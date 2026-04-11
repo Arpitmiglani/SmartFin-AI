@@ -1,7 +1,10 @@
 import streamlit as st
 import pandas as pd
 
+from agents.insight_agent import InsightAgent
+
 DATA_PATH = "data/transactions.csv"
+insight_agent = InsightAgent(DATA_PATH)
 
 st.title("Expense History")
 
@@ -16,6 +19,7 @@ if "delete_index" not in st.session_state:
 df = pd.read_csv(DATA_PATH)
 
 # ---------------- CLEAN BUTTON STYLE ----------------
+
 st.markdown("""
 <style>
 div[data-testid="stButton"] button {
